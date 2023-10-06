@@ -1,39 +1,33 @@
-<div class="text">
-	<div class="container blogBoxCont">
-		<div class="row headerRow">
-			<div class="col-8">
-				<h2 class="blogTitle text-uppercase">{{title}}</h2>
-			</div>
-			<div class="col-4">
-				<p class="blogCreate text-right">Created by {{user.username}} on {{format_date date_created}}</p>
-			</div>
-		</div>
-		<p class="text-center blogDescTwo">{{description}}</p>
-		</div>	
-</div>
+<section class="card">
+  {{!-- blog id's> --}}
+    <h3>{{name}}</h3>
+    <br>
+    <p>{{description}}</p>
+    <p>Date Created: {{ format_date date_created}}</p>
+    <p> Post By: {{User.name}}</p>
+</section>
 
-		{{#if logged_in}}
+<section>
+  <ul id="comments-list">
+    <!-- comments -->
+  </ul>
+</section>
 
-		<form class="new-comment-form formCont d-flex flex-wrap justify-content-center" data-blogid={{id}}>
-			<div class="textAreaCont p-2">
-				<textarea id='comment_description' name="comment-body"
-				placeholder="Enter a comment here..."
-				cols="30"
-				rows="2"></textarea>
-			</div>
-			<div class="btnComment p-2">
-				<button class="button btn btn-success" type="submit">Add Comment</button>
-			</div>
-		</form>
+{{#if logged_in}}
+<form class="new-comment-form" data-blog_id={{id}}>
+  <div>
+    <label for="comment">Comment</label>
+    <input type="text" id="comment" placeholder="your comment here"/>
+    <button id="submit-Comment">Submit</button>
+</form>
+{{else}}
+<a href="./public/js/comments.js">Log in</a>
+{{/if}}
 
-		{{/if}}
+<h2>Comments</h2>
 
-		<h2 class="text-center">Comments</h2>
-		{{#each comments as |comment|}}
-		<div class="commentCont">
-			<p class="text-center commentText">{{comment.comment_description}}</p>
-			<p class="text-center commentOwner"><span>~</span>Created by {{comment.user.username}} on {{format_date date_created}}<span>~</span></p>
-		</div>
-		{{/each}}
-
-		<script src="/js/comments.js"></script>
+  {{#each comments as |comment|}}
+<section class="card">
+  <p>{{comment.text}}</p>
+  <p>{{comment.user.name}} {{format_date date_created}}</p>
+</section>
